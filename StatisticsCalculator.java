@@ -2,6 +2,8 @@ package def;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.*;
 
 public class StatisticsCalculator {
 	public static void main(String[] args) {
@@ -55,16 +57,36 @@ public class StatisticsCalculator {
             JOptionPane.showMessageDialog(null, "The average is: " + average, "AVERAGE", JOptionPane.INFORMATION_MESSAGE);
         
         //Median
-			double median = 0;
-			int arrayCounter = 0;
 			Arrays.sort(iArray); //Sorting from low to high, necessary to calculate the median
-            if(arrayCounter % 2 == 0) {
-            	JOptionPane.showMessageDialog(null, "The median is: " + (((double)iArray[iArray.length/2] + (double)iArray[iArray.length/2 - 1])/2), "MEDIAN", JOptionPane.INFORMATION_MESSAGE);
-            } else if(arrayCounter % 2 !=0) {
-            	JOptionPane.showMessageDialog(null, "The median is: " + (iArray[arrayCounter/2]), "MEDIAN", JOptionPane.INFORMATION_MESSAGE);
+            if(iarrayLen % 2 == 0) { //if the array is even
+            	JOptionPane.showMessageDialog(null, "The median is: " + (((double)iArray[iArray.length/2] + (double)iArray[iarrayLen/2 - 1])/2), "MEDIAN", JOptionPane.INFORMATION_MESSAGE);
+            } else if(iarrayLen % 2 !=0) {
+            	JOptionPane.showMessageDialog(null, "The median is: " + (iArray[iarrayLen/2]), "MEDIAN", JOptionPane.INFORMATION_MESSAGE);
             }
         
          //Mode
+            Map<Float, Float> frequencyMap = new HashMap<>();
+            for (int i = 0; i < iarrayLen; i++) {
+            	float currentElement = iArray[i];
+            	if (frequencyMap.containsKey(currentElement)) {
+                    // If the element is already in the map, increase its count
+                    frequencyMap.put(currentElement, frequencyMap.get(currentElement) + 1);
+                } else {
+                    // If the element is not in the map, add it with a count of 1
+                    frequencyMap.put(currentElement, (float) 1);
+                }
+            }
+            float mode = iArray[0]; // Start by assuming the first element is the mode
+            float maxCount = 0; // Initialize the highest frequency count to 0
+
+            for (float key : frequencyMap.keySet()) {
+                float count = frequencyMap.get(key); // Get the frequency of the current element
+                if (count > maxCount) {
+                    maxCount = count; // Update the maximum frequency
+                    mode = key; // Update the mode
+                }
+            }
+            JOptionPane.showMessageDialog(null, "The mode is: " + mode, "MODE", JOptionPane.INFORMATION_MESSAGE);
             
             
         } catch (NumberFormatException e) {
