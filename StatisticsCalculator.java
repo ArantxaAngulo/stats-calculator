@@ -1,8 +1,5 @@
 package def;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
-import java.util.Scanner;
-import java.util.Set;
 import java.util.*;
 
 public class StatisticsCalculator {
